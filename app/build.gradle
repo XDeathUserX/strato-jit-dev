@@ -104,9 +104,9 @@ android {
 
     flavorDimensions += "version"
     productFlavors {
-        mainline {
+    /*    mainline {
             dimension = "version"
-        }
+        } */
 
         dev {
             dimension = "version"
