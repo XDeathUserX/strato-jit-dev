@@ -104,14 +104,14 @@ android {
 
     flavorDimensions += "version"
     productFlavors {
-    /*    mainline {
+        full {
             dimension = "version"
-        } */
+        } 
 
-        dev {
+     /*   dev {
             dimension = "version"
             applicationIdSuffix = ".dev"
-        }
+        }*/
     }
 
     buildFeatures {
