@@ -233,6 +233,11 @@ namespace skyline::service::hid {
         return {};
     }
 
+    Result IHidServer::GetActualVibrationValue(type::KSession &session, ipc::IpcRequest &request, ipc::IpcResponse &response) {
+        response.Push<u64>(0);
+        return {};
+    }
+
     Result IHidServer::SendVibrationValue(type::KSession &session, ipc::IpcRequest &request, ipc::IpcResponse &response) {
         const auto &handle{request.Pop<NpadDeviceHandle>()};
         auto &device{state.input->npad.at(handle.id)};
