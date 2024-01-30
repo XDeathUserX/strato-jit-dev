@@ -22,7 +22,7 @@ android {
         applicationId "org.stratoemu.strato"
 
         minSdk 29
-        targetSdk 34
+        targetSdk 33
 
         versionCode getGitVersionCode()
         versionName getGitVersionName()
@@ -69,7 +69,7 @@ android {
 
     buildTypes {
         release {
-            debuggable false
+            debuggable true
             externalNativeBuild {
                 cmake {
                     arguments "-DCMAKE_BUILD_TYPE=RELEASE"
@@ -104,9 +104,9 @@ android {
 
     flavorDimensions += "version"
     productFlavors {
-        full {
+        mainline {
             dimension = "version"
-        } 
+        }
 
         dev {
             dimension = "version"
@@ -120,7 +120,7 @@ android {
     }
 
     /* NDK and CMake */
-    ndkVersion '25.0.8775105'
+    ndkVersion '26.1.10909125'
     externalNativeBuild {
         cmake {
             version '3.22.1+'
@@ -208,7 +208,7 @@ def getGitVersionName() {
         if (!isTag)
             versionName += '-' + getGitBranch() + '-' + getGitShortHash()
     } catch (Exception e) {
-        logger.quiet(e.toString() + ': defaulting to dummy version number ' + versionName)
+        logger.quiet(e + ': defaulting to dummy version number ' + versionName)
     }
 
     logger.quiet('Version name: ' + versionName)
@@ -225,7 +225,7 @@ def getGitVersionCode() {
         versionCode = Integer.max('git rev-list --first-parent --count --tags'.execute([], project.rootDir).text
                 .toInteger(), versionCode)
     } catch (Exception e) {
-        logger.error(e.toString() + ': defaulting to dummy version code ' + versionCode)
+        logger.error(e + ': defaulting to dummy version code ' + versionCode)
     }
 
     logger.quiet('Version code: ' + versionCode)
@@ -241,7 +241,7 @@ def getGitShortHash() {
     try {
         gitHash = 'git rev-parse --short HEAD'.execute([], project.rootDir).text.trim()
     } catch (Exception e) {
-        logger.error(e.toString() + ': defaulting to dummy build hash ' + gitHash)
+        logger.error(e + ': defaulting to dummy build hash ' + gitHash)
     }
 
     return gitHash
@@ -256,7 +256,7 @@ def getGitBranch() {
     try {
         branch = 'git rev-parse --abbrev-ref HEAD'.execute([], project.rootDir).text.trim()
     } catch (Exception e) {
-        logger.error(e.toString() + ': defaulting to dummy branch ' + branch)
+        logger.error(e + ': defaulting to dummy branch ' + branch)
     }
 
     return branch
