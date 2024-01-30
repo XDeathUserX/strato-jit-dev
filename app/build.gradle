@@ -16,7 +16,7 @@ project.ext.isBuildSigned = (System.getenv("CI") == "true") && (System.getenv("I
 
 android {
     namespace 'org.stratoemu.strato'
-    compileSdk 34
+    compileSdk 33
 
     defaultConfig {
         applicationId "org.stratoemu.strato"
@@ -120,7 +120,7 @@ android {
     }
 
     /* NDK and CMake */
-    ndkVersion '26.1.10909125'
+    ndkVersion '25.0.8775105'
     externalNativeBuild {
         cmake {
             version '3.22.1+'
