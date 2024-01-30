@@ -16,13 +16,13 @@ project.ext.isBuildSigned = (System.getenv("CI") == "true") && (System.getenv("I
 
 android {
     namespace 'org.stratoemu.strato'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "org.stratoemu.strato"
 
         minSdk 29
-        targetSdk 33
+        targetSdk 34
 
         versionCode getGitVersionCode()
         versionName getGitVersionName()
@@ -69,7 +69,7 @@ android {
 
     buildTypes {
         release {
-            debuggable true
+            debuggable false
             externalNativeBuild {
                 cmake {
                     arguments "-DCMAKE_BUILD_TYPE=RELEASE"
@@ -108,10 +108,10 @@ android {
             dimension = "version"
         } 
 
-     /*   dev {
+        dev {
             dimension = "version"
             applicationIdSuffix = ".dev"
-        }*/
+        }
     }
 
     buildFeatures {
