@@ -104,7 +104,7 @@ android {
 
     flavorDimensions += "version"
     productFlavors {
-        assembleFullReldebug {
+        assembleAssembleFullReldebugRelease {
             dimension = "version"
         }
 
