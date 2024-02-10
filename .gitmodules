@@ -8,7 +8,7 @@
 [submodule "LZ4"]
 	path = app/libraries/lz4
 	url = https://github.com/lz4/lz4.git
-	ignore = dirty
+	branch = dev
 [submodule "Frozen"]
 	path = app/libraries/frozen
 	url = https://github.com/serge-sans-paille/frozen
