@@ -231,7 +231,7 @@ def getGitVersionCode() {
     logger.quiet('Version code: ' + versionCode)
     return versionCode
     */
-    return 0;
+    return 1;
 }
 
 /**
