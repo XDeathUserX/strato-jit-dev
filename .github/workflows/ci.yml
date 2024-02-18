@@ -80,14 +80,14 @@ jobs:
 
       - name: Upload Signed Debug APK
         if: env.IS_BUILD_SIGNED == 'true' && env.UPLOAD_ARTIFACTS == 'true'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: strato-${{ github.run_number }}-reldebug.apk
           path: strato-${{ github.run_number }}-reldebug.apk
 
       - name: Upload Signed Release APK
         if: env.IS_BUILD_SIGNED == 'true' && env.UPLOAD_ARTIFACTS == 'true'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: strato-${{ github.run_number }}-release.apk
           path: strato-${{ github.run_number }}-release.apk
@@ -100,14 +100,14 @@ jobs:
 
       - name: Upload Unsigned Debug APK
         if: env.IS_BUILD_SIGNED == 'false' && env.UPLOAD_ARTIFACTS == 'true'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: strato-${{ github.run_number }}-unsigned-reldebug.apk
           path: strato-${{ github.run_number }}-unsigned-reldebug.apk
 
       - name: Upload Unsigned Release APK
         if: env.IS_BUILD_SIGNED == 'false' && env.UPLOAD_ARTIFACTS == 'true'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: strato-${{ github.run_number }}-unsigned-release.apk
           path: strato-${{ github.run_number }}-unsigned-release.apk
