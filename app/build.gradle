@@ -194,7 +194,7 @@ kapt {
 def getGitVersionName() {
     def versionName = '1.0.0'
 
-  /*  try {
+    try {
         // Check if HEAD is a tag
         def process = 'git describe --exact-match'.execute([], project.rootDir)
         def isTag = process.waitFor() == 0
@@ -212,14 +212,14 @@ def getGitVersionName() {
     }
 
     logger.quiet('Version name: ' + versionName)
-   */ return versionName
+    return versionName
 }
 
 /**
  * Returns the number of commits until the last tag
  */
 def getGitVersionCode() {
- /*   def versionCode = 1
+    def versionCode = 1
 
     try {
         versionCode = Integer.max('git rev-list --first-parent --count --tags'.execute([], project.rootDir).text
@@ -230,8 +230,6 @@ def getGitVersionCode() {
 
     logger.quiet('Version code: ' + versionCode)
     return versionCode
-    */
-    return 1;
 }
 
 /**
