@@ -5,6 +5,7 @@
 
 #include <bitset>
 #include <fmt/format.h>
+#include <fmt/xchar.h>
 
 namespace fmt {
     /**
