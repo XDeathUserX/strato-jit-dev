@@ -4,7 +4,7 @@
 #pragma once
 
 #include <bitset>
-#include <fmt/format.h>
+// #include <fmt/format.h>
 #include <fmt/xchar.h>
 
 namespace fmt {
