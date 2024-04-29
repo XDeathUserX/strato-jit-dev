@@ -57,21 +57,21 @@ jobs:
         run: |
           ./gradlew --stacktrace --configuration-cache --build-cache --parallel --configure-on-demand assembleMainlineRelease assembleDevReldebug
 
+      - name: Compute git short sha
+        shell: bash
+        run: echo "git_short_sha=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+        
       - if : failure()
         uses: actions/upload-artifact@v4
         with:
-          name: vita3k-${{ env.git_short_sha }}-failed-build-report.zip
+          name: strato-${{ env.git_short_sha }}-failed-build-report.zip
           path: /home/runner/work/stratos/stratos/build/reports/*
 
       - if : success()
         uses: actions/upload-artifact@v4
         with:
-          name: vita3k-${{ env.git_short_sha }}-success-build-report.zip
+          name: strato-${{ env.git_short_sha }}-success-build-report.zip
           path: /home/runner/work/stratos/stratos/build/reports/configuration-cache/*
-          
-      - name: Compute git short sha
-        shell: bash
-        run: echo "git_short_sha=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
         
       - uses: actions/upload-artifact@v4
         with:
