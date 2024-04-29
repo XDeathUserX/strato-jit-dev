@@ -56,8 +56,6 @@ jobs:
           CCACHE_COMPILERCHECK: "string:${{ env.NDK_VERSION }}"
         run: |
           ./gradlew --stacktrace --configuration-cache --build-cache --parallel --configure-on-demand assembleMainlineRelease assembleDevReldebug
-          echo "Get apk folder"
-          ls -l app/build/outputs/apk/*/*
 
       - if : failure()
         uses: actions/upload-artifact@v4
@@ -78,9 +76,9 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: strato-${{ env.git_short_sha }}-release.apk
-          path: app/build/outputs/apk/full/release/app-full-release.apk
+          path: app/build/outputs/apk/mainline/release/app-mainline-release.apk
 
       - uses: actions/upload-artifact@v4
         with:
           name: strato-${{ env.git_short_sha }}-debug.apk
-          path: app/build/outputs/apk/full/reldebug/app-full-reldebug.apk
+          path: app/build/outputs/apk/dev/reldebug/app-dev-reldebug.apk
