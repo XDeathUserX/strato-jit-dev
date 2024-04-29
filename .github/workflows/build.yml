@@ -54,44 +54,33 @@ jobs:
           CMAKE_C_COMPILER_LAUNCHER: "ccache"
           CMAKE_CXX_COMPILER_LAUNCHER: "ccache"
           CCACHE_COMPILERCHECK: "string:${{ env.NDK_VERSION }}"
-        run: ./gradlew --stacktrace --configuration-cache --build-cache --parallel --configure-on-demand assembleMainlineRelease assembleDevReldebug
-
-      - name: Rename APKs (Signed)
-        if: env.IS_BUILD_SIGNED == 'true' && env.UPLOAD_ARTIFACTS == 'true'
         run: |
-          mv app/build/outputs/apk/full/reldebug/app-full-reldebug.apk strato-$GITHUB_RUN_NUMBER-reldebug.zip
-          mv app/build/outputs/apk/full/release/app-full-release.apk strato-$GITHUB_RUN_NUMBER-release.zip
+          ./gradlew --stacktrace --configuration-cache --build-cache --parallel --configure-on-demand assembleMainlineRelease assembleDevReldebug
+          echo "Get apk folder"
+          ls -l app/build/outputs/apk/*/*
 
-      - name: Upload Signed Debug APK
-        if: env.IS_BUILD_SIGNED == 'true' && env.UPLOAD_ARTIFACTS == 'true'
+      - if : failure()
         uses: actions/upload-artifact@v4
         with:
-          name: strato-${{ github.run_number }}-reldebug.zip
-          path: strato-${{ github.run_number }}-reldebug.zip
+          name: vita3k-${{ env.git_short_sha }}-failed-build-report.zip
+          path: /home/runner/work/stratos/stratos/build/reports/*
 
-      - name: Upload Signed Release APK
-        if: env.IS_BUILD_SIGNED == 'true' && env.UPLOAD_ARTIFACTS == 'true'
+      - if : success()
         uses: actions/upload-artifact@v4
         with:
-          name: strato-${{ github.run_number }}-release.zip
-          path: strato-${{ github.run_number }}-release.zip
-
-      - name: Rename APKs (Unsigned)
-        if: env.IS_BUILD_SIGNED == 'false' && env.UPLOAD_ARTIFACTS == 'true'
-        run: |
-          mv app/build/outputs/apk/full/reldebug/app-full-reldebug.apk strato-$GITHUB_RUN_NUMBER-unsigned-reldebug.zip
-          mv app/build/outputs/apk/full/release/app-full-release.apk strato-$GITHUB_RUN_NUMBER-unsigned-release.zip
-
-      - name: Upload Unsigned Debug APK
-        if: env.IS_BUILD_SIGNED == 'false' && env.UPLOAD_ARTIFACTS == 'true'
-        uses: actions/upload-artifact@v4
+          name: vita3k-${{ env.git_short_sha }}-success-build-report.zip
+          path: /home/runner/work/stratos/stratos/build/reports/configuration-cache/*
+          
+      - name: Compute git short sha
+        shell: bash
+        run: echo "git_short_sha=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+        
+      - uses: actions/upload-artifact@v4
         with:
-          name: strato-${{ github.run_number }}-unsigned-reldebug.zip
-          path: strato-${{ github.run_number }}-unsigned-reldebug.zip
+          name: strato-${{ env.git_short_sha }}-release.apk
+          path: app/build/outputs/apk/full/release/app-full-release.apk
 
-      - name: Upload Unsigned Release APK
-        if: env.IS_BUILD_SIGNED == 'false' && env.UPLOAD_ARTIFACTS == 'true'
-        uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v4
         with:
-          name: strato-${{ github.run_number }}-unsigned-release.zip
-          path: strato-${{ github.run_number }}-unsigned-release.zip
+          name: strato-${{ env.git_short_sha }}-debug.apk
+          path: app/build/outputs/apk/full/reldebug/app-full-reldebug.apk
