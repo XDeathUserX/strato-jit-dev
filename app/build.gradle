@@ -220,17 +220,19 @@ def getGitVersionName() {
  * Returns the number of commits until the last tag
  */
 def getGitVersionCode() {
-    def versionCode = 1
+ /*   def versionCode = 1
 
     try {
         versionCode = Integer.max('git rev-list --first-parent --count --tags'.execute([], project.rootDir).text
                 .toInteger(), versionCode)
     } catch (Exception e) {
-        logger.error(e.toString() + ': defaulting to dummy version code ' + versionCode)
+        logger.error(e + ': defaulting to dummy version code ' + versionCode)
     }
 
     logger.quiet('Version code: ' + versionCode)
     return versionCode
+    */
+    return 1;
 }
 
 /**
