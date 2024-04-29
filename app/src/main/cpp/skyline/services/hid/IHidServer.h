@@ -196,6 +196,11 @@ namespace skyline::service::hid {
         Result CreateActiveVibrationDeviceList(type::KSession &session, ipc::IpcRequest &request, ipc::IpcResponse &response);
 
         /**
+         * @url https://switchbrew.org/wiki/HID_services#GetActualVibrationValue
+         */
+        Result GetActualVibrationValue(type::KSession &session, ipc::IpcRequest &request, ipc::IpcResponse &response);
+
+        /**
          * @brief Send vibration values to a HID device
          * @url https://switchbrew.org/wiki/HID_services#SendVibrationValues
          */
@@ -264,6 +269,7 @@ namespace skyline::service::hid {
             SFUNC(0xCB, IHidServer, CreateActiveVibrationDeviceList),
             SFUNC(0xC8, IHidServer, GetVibrationDeviceInfo),
             SFUNC(0xC9, IHidServer, SendVibrationValue),
+            SFUNC(0xCA, IHidServer, GetActualVibrationValue),
             SFUNC(0xCE, IHidServer, SendVibrationValues),
             SFUNC(0xCD, IHidServer, IsVibrationPermitted),
             SFUNC(0xD3, IHidServer, IsVibrationDeviceMounted),
