@@ -87,7 +87,7 @@ namespace skyline::kernel::type {
             throw exception("Failed to find free memory for a tls slot!");
 
         // Translate the page address to the host address space so that it can be accessed directly
-        pageCandidate = memory.TranslateVirtualPointer<u8 *>(reinterpret_cast<u64>(pageCandidate));
+        // pageCandidate = memory.TranslateVirtualPointer<u8 *>(reinterpret_cast<u64>(pageCandidate));
 
         auto tlsPage{std::make_shared<TlsPage>(pageCandidate)};
         tlsPages.push_back(tlsPage);
