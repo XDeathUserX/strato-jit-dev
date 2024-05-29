@@ -58,9 +58,6 @@
 [submodule "app/libraries/audio-core"]
 	path = app/libraries/audio-core
 	url = https://github.com/ikhoeyZX/audio-core.git
-[submodule "Dynarmic"]
+[submodule "app/libraries/dynarmic"]
 	path = app/libraries/dynarmic
-	url = https://github.com/strato-emu/dynarmic.git
-[submodule "dynarmic"]
-	path = dynarmic
 	url = https://github.com/strato-emu/dynarmic.git
