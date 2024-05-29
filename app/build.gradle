@@ -193,9 +193,9 @@ kapt {
  * e.g. `1.0.0-pr123-ab00cd11`
  */
 def getGitVersionName() {
-    def versionName = '1.0.0'
+    def versionName = '1.0.0-JIT'
     
-    try {
+/*    try {
         // Check if HEAD is a tag
         def process = 'git describe --exact-match'.execute([], project.rootDir)
         def isTag = process.waitFor() == 0
@@ -213,7 +213,7 @@ def getGitVersionName() {
     }
 
     logger.quiet('Version name: ' + versionName)
-    
+    */
     return versionName
 }
 
