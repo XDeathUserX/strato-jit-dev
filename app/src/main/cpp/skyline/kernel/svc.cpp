@@ -238,8 +238,9 @@ namespace skyline::kernel::svc {
             LOGD("Trying to query memory outside of the application's address space: {}", fmt::ptr(address));
         }
 
-        auto *out = state.process->memory.TranslateVirtualPointer<memory::MemoryInfo *>(ctx.x0);
-        *out = memInfo;
+        *reinterpret_cast<memory::MemoryInfo *>(ctx.x0) = memInfo;
+      //  auto *out = state.process->memory.TranslateVirtualPointer<memory::MemoryInfo *>(ctx.x0);
+      //  *out = memInfo;
         // The page info, which is always 0
         ctx.w1 = 0;
 
@@ -665,7 +666,8 @@ namespace skyline::kernel::svc {
             return;
         }
 
-        span waitHandles(state.process->memory.TranslateVirtualPointer<KHandle *>(ctx.x1), numHandles);
+        span waitHandles(reinterpret_cast<KHandle *>(ctx.x1), numHandles);
+       // span waitHandles(state.process->memory.TranslateVirtualPointer<KHandle *>(ctx.x1), numHandles);
         std::vector<std::shared_ptr<type::KSyncObject>> objectTable;
         objectTable.reserve(numHandles);
 
@@ -791,7 +793,8 @@ namespace skyline::kernel::svc {
     }
 
     void ArbitrateLock(const DeviceState &state, SvcContext &ctx) {
-        auto mutex{state.process->memory.TranslateVirtualPointer<u32 *>(ctx.x1)};
+        auto mutex{reinterpret_cast<u32 *>(ctx.x1)};
+     //   auto mutex{state.process->memory.TranslateVirtualPointer<u32 *>(ctx.x1)};
         if (!util::IsWordAligned(mutex)) {
             LOGW("'mutex' not word aligned: {}", fmt::ptr(mutex));
             ctx.w0 = result::InvalidAddress;
@@ -814,7 +817,8 @@ namespace skyline::kernel::svc {
     }
 
     void ArbitrateUnlock(const DeviceState &state, SvcContext &ctx) {
-        auto mutex{state.process->memory.TranslateVirtualPointer<u32 *>(ctx.x0)};
+        auto mutex{reinterpret_cast<u32 *>(ctx.x0)};
+        // auto mutex{state.process->memory.TranslateVirtualPointer<u32 *>(ctx.x0)};
         if (!util::IsWordAligned(mutex)) {
             LOGW("'mutex' not word aligned: {}", fmt::ptr(mutex));
             ctx.w0 = result::InvalidAddress;
@@ -829,14 +833,16 @@ namespace skyline::kernel::svc {
     }
 
     void WaitProcessWideKeyAtomic(const DeviceState &state, SvcContext &ctx) {
-        auto mutex{state.process->memory.TranslateVirtualPointer<u32 *>(ctx.x0)};
+        auto mutex{reinterpret_cast<u32 *>(ctx.x0)};
+        // auto mutex{state.process->memory.TranslateVirtualPointer<u32 *>(ctx.x0)};
         if (!util::IsWordAligned(mutex)) {
             LOGW("'mutex' not word aligned: {}", fmt::ptr(mutex));
             ctx.w0 = result::InvalidAddress;
             return;
         }
 
-        auto conditional{state.process->memory.TranslateVirtualPointer<u32 *>(ctx.x1)};
+        auto conditional{reinterpret_cast<u32 *>(ctx.x1)};
+        // auto conditional{state.process->memory.TranslateVirtualPointer<u32 *>(ctx.x1)};
         KHandle requesterHandle{ctx.w2};
 
         i64 timeout{static_cast<i64>(ctx.x3)};
@@ -851,7 +857,8 @@ namespace skyline::kernel::svc {
     }
 
     void SignalProcessWideKey(const DeviceState &state, SvcContext &ctx) {
-        auto conditional{state.process->memory.TranslateVirtualPointer<u32 *>(ctx.x0)};
+        auto conditional{reinterpret_cast<u32 *>(ctx.x0)};
+        //   auto conditional{state.process->memory.TranslateVirtualPointer<u32 *>(ctx.x0)};
         i32 count{static_cast<i32>(ctx.w1)};
 
         LOGD("Signalling {} for {} waiters", fmt::ptr(conditional), count);
@@ -874,7 +881,8 @@ namespace skyline::kernel::svc {
 
     void ConnectToNamedPort(const DeviceState &state, SvcContext &ctx) {
         constexpr u8 portSize = 0x8; //!< The size of a port name string
-        std::string_view port(span(state.process->memory.TranslateVirtualPointer<char *>(ctx.x1), portSize).as_string(true));
+        std::string_view port(span(reinterpret_cast<char *>(ctx.x1), portSize).as_string(true));
+        // std::string_view port(span(state.process->memory.TranslateVirtualPointer<char *>(ctx.x1), portSize).as_string(true));
 
         KHandle handle{};
         if (port.compare("sm:") >= 0) {
@@ -920,7 +928,8 @@ namespace skyline::kernel::svc {
     }
 
     void OutputDebugString(const DeviceState &state, SvcContext &ctx) {
-        auto string{span(state.process->memory.TranslateVirtualPointer<char *>(ctx.x0), ctx.x1).as_string()};
+        auto string{span(reinterpret_cast<char *>(ctx.x0), ctx.x1).as_string()};
+        // auto string{span(state.process->memory.TranslateVirtualPointer<char *>(ctx.x0), ctx.x1).as_string()};
 
         if (string.back() == '\n')
             string.remove_suffix(1);
@@ -1216,8 +1225,8 @@ namespace skyline::kernel::svc {
             };
             static_assert(sizeof(ThreadContext) == 0x320);
 
-            *reinterpret_cast<memory::MemoryInfo *>(ctx.x0) = memInfo;
-           // auto &context{*state.process->memory.TranslateVirtualPointer<ThreadContext *>(ctx.x0)};
+            auto &context{*reinterpret_cast<ThreadContext *>(ctx.x0)};
+            // auto &context{*state.process->memory.TranslateVirtualPointer<ThreadContext *>(ctx.x0)};
             context = {}; // Zero-initialize the contents of the context as not all fields are set
 
             if (state.process->is64bit()) {
@@ -1267,7 +1276,8 @@ namespace skyline::kernel::svc {
     }
 
     void WaitForAddress(const DeviceState &state, SvcContext &ctx) {
-        auto address{state.process->memory.TranslateVirtualPointer<u32 *>(ctx.x0)};
+        auto address{reinterpret_cast<u32 *>(ctx.x0)};
+        //;auto address{state.process->memory.TranslateVirtualPointer<u32 *>(ctx.x0)};
         if (!util::IsWordAligned(address)) [[unlikely]] {
             LOGW("'address' not word aligned: {}", fmt::ptr(address));
             ctx.w0 = result::InvalidAddress;
@@ -1315,7 +1325,8 @@ namespace skyline::kernel::svc {
     }
 
     void SignalToAddress(const DeviceState &state, SvcContext &ctx) {
-        auto address{state.process->memory.TranslateVirtualPointer<u32 *>(ctx.x0)};
+        auto address{reinterpret_cast<u32 *>(ctx.x0)};
+        // auto address{state.process->memory.TranslateVirtualPointer<u32 *>(ctx.x0)};
         if (!util::IsWordAligned(address)) [[unlikely]] {
             LOGW("'address' not word aligned: {}", fmt::ptr(address));
             ctx.w0 = result::InvalidAddress;
