@@ -417,8 +417,8 @@ namespace skyline {
              * @brief Translates a guest virtual address to a host address and returns a pointer of the specified type to it
              * @return A pointer to the translated address of the specified type
              */
-            template<typename T>
-            T TranslateVirtualPointer(u64 vaddr) const;
+         //   template<typename T>
+         //   T TranslateVirtualPointer(u64 vaddr) const;
 
             /**
              * @brief Translates a host address to the corresponding address in the guest address space
