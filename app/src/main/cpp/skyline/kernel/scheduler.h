@@ -87,7 +87,12 @@ namespace skyline {
              * @brief A signal handler for scheduling guest threads not currently running guest code
              */
             static void HostSignalHandler(int signal, siginfo *info, ucontext *ctx);
-
+                
+            /**
+             * @brief A signal handler for scheduling guest threads running through the JIT
+             */
+            static void JitSignalHandler(int signal, siginfo *info, ucontext *ctx);
+                
             /**
              * @brief Checks all cores and determines the core where the supplied thread should be scheduled the earliest
              * @note 'KThread::coreMigrationMutex' **must** be locked by the calling thread prior to calling this
@@ -118,9 +123,8 @@ namespace skyline {
 
             /**
              * @brief Rotates the calling thread's resident core queue, if it's at the front of it
-             * @param cooperative If this was triggered by a cooperative yield as opposed to a preemptive one
              */
-            void Rotate(bool cooperative = true);
+            void Rotate();
 
             /**
              * @brief Removes the calling thread from its resident core queue
