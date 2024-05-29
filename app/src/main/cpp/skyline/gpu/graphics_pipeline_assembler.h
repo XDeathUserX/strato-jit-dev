@@ -5,7 +5,7 @@
 
 #include <functional>
 #include <future>
-#include "BS_thread_pool.hpp"
+#include <include/BS_thread_pool.hpp>
 #include <vulkan/vulkan_raii.hpp>
 
 namespace skyline::gpu {
