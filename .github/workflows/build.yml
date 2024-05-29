@@ -1,6 +1,8 @@
 # A workflow to verify the build on every push to the master branch
 name: Build
 
+on: [push]
+
 jobs:
   build:
     runs-on: ubuntu-latest
