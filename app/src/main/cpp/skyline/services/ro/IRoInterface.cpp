@@ -30,7 +30,7 @@ namespace skyline::service::ro {
         auto &header{data.as<loader::NroHeader>()};
 
         std::array<u8, 0x20> hash{};
-        mbedtls_sha256_ret(data.data(), data.size(), hash.data(), 0);
+        mbedtls_sha256(data.data(), data.size(), hash.data(), 0);
 
         if (!loadedNros.emplace(hash).second)
             return result::AlreadyLoaded;
