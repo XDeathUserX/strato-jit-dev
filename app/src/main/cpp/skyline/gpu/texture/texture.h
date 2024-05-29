@@ -11,6 +11,7 @@
 #include <gpu/tag_allocator.h>
 #include <gpu/memory_manager.h>
 #include <gpu/usage_tracker.h>
+#include <vulkan/vulkan_format_traits.hpp>
 
 namespace skyline::gpu {
     namespace texture {
