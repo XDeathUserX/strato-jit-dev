@@ -28,6 +28,9 @@ namespace skyline {
         class NCE;
         struct ThreadContext;
     }
+    namespace jit {
+        class Jit32;
+    }
     class JvmManager;
     namespace gpu {
         class GPU;
