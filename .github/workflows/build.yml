@@ -29,11 +29,11 @@ jobs:
             ${{ runner.os }}-gradle-${{ hashFiles('**/build.gradle') }}-
             ${{ runner.os }}-gradle-
 
-      - name: Install Java 17
+      - name: Set up Java
         uses: actions/setup-java@v4
         with:
-          distribution: 'temurin' # Temurin should come pre-installed on GitHub-hosted runners
-          java-version: '17'
+          java-version: 17
+          distribution: "temurin"
 
       - name: Install Ninja Build
         run: |
