@@ -1216,7 +1216,8 @@ namespace skyline::kernel::svc {
             };
             static_assert(sizeof(ThreadContext) == 0x320);
 
-            auto &context{*state.process->memory.TranslateVirtualPointer<ThreadContext *>(ctx.x0)};
+            *reinterpret_cast<memory::MemoryInfo *>(ctx.x0) = memInfo;
+           // auto &context{*state.process->memory.TranslateVirtualPointer<ThreadContext *>(ctx.x0)};
             context = {}; // Zero-initialize the contents of the context as not all fields are set
 
             if (state.process->is64bit()) {
