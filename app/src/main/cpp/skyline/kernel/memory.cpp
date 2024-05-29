@@ -679,16 +679,16 @@ namespace skyline::kernel {
         return vaddr + guestOffset;
     }
 
-    template<typename T>
-    __attribute__((always_inline)) T MemoryManager::TranslateVirtualPointer(u64 vaddr) const {
-        u64 paddr = TranslateVirtualAddress(vaddr);
-        auto *ptr = reinterpret_cast<void *>(paddr);
+    // template<typename T>
+    // __attribute__((always_inline)) T MemoryManager::TranslateVirtualPointer(u64 vaddr) const {
+    //    u64 paddr = TranslateVirtualAddress(vaddr);
+    //    auto *ptr = reinterpret_cast<void *>(paddr);
 
-        return reinterpret_cast<T>(ptr);
-    }
+    //    return reinterpret_cast<T>(ptr);
+    // }
 
-    __attribute__((always_inline)) u64 MemoryManager::TranslateHostAddress(u8 *paddr) const {
-        assert(reinterpret_cast<u64>(paddr) >= guestOffset);
-        return reinterpret_cast<u64>(paddr) - guestOffset;
-    }
+    // __attribute__((always_inline)) u64 MemoryManager::TranslateHostAddress(u8 *paddr) const {
+    //    assert(reinterpret_cast<u64>(paddr) >= guestOffset);
+    //    return reinterpret_cast<u64>(paddr) - guestOffset;
+    // }
 }
