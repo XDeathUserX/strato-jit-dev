@@ -20,7 +20,7 @@ android {
         applicationId "org.stratoemu.strato"
 
         minSdk 29
-        targetSdk 33
+        targetSdk 34
 
         versionCode getGitVersionCode()
         versionName getGitVersionName()
@@ -194,7 +194,7 @@ kapt {
  */
 def getGitVersionName() {
     def versionName = '1.0.0'
-    /*
+    
     try {
         // Check if HEAD is a tag
         def process = 'git describe --exact-match'.execute([], project.rootDir)
@@ -213,7 +213,7 @@ def getGitVersionName() {
     }
 
     logger.quiet('Version name: ' + versionName)
-    */
+    
     return versionName
 }
 
