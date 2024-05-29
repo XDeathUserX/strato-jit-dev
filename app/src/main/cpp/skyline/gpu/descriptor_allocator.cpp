@@ -70,7 +70,7 @@ namespace skyline::gpu {
         if (pool->freeSetCount > 0)
             pool->freeSetCount--;
 
-        return vk::createResultValue(result, descriptorSet, __builtin_FUNCTION(), {
+        return vk::createResultValueType(result, descriptorSet {
             vk::Result::eSuccess,
             vk::Result::eErrorOutOfPoolMemory,
             vk::Result::eErrorFragmentedPool
