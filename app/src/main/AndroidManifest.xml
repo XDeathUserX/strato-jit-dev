@@ -10,7 +10,20 @@
         android:name="android.hardware.vulkan.version"
         android:required="true"
         android:version="0x401000" />
-
+    <!-- Game controller support -->
+    <uses-feature
+        android:name="android.hardware.bluetooth"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.gamepad"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.usb.host"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.type.pc"
+        android:required="false" />
+    
     <application
         android:name=".StratoApplication"
         android:enableOnBackInvokedCallback="true"
@@ -107,6 +120,10 @@
                     android:mimeType="application/nro"
                     android:scheme="content"
                     tools:ignore="IntentFilterUniqueDataAttributes" />
+            </intent-filter>
+             <!-- Let Android know that we can handle some USB devices and should receive this event -->
+            <intent-filter>
+                <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
             </intent-filter>
         </activity>
 
