@@ -55,30 +55,31 @@ jobs:
           CMAKE_CXX_COMPILER_LAUNCHER: "ccache"
           CCACHE_COMPILERCHECK: "string:${{ env.NDK_VERSION }}"
         run: |
-          ./gradlew --stacktrace --configuration-cache --build-cache --parallel --configure-on-demand assembleMainlineRelease assembleDevReldebug
+          ./gradlew --stacktrace --configuration-cache --build-cache --parallel --configure-on-demand assembleMainlineRelease
+        # ./gradlew --stacktrace --configuration-cache --build-cache --parallel --configure-on-demand assembleMainlineRelease assembleDevReldebug
 
       - name: Compute git short sha
         shell: bash
         run: echo "git_short_sha=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
         
-      - if : failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: strato-${{ env.git_short_sha }}-failed-build-report.zip
-          path: /home/runner/work/stratos/stratos/build/reports/*
+#      - if : failure()
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: strato-${{ env.git_short_sha }}-failed-build-report.zip
+#          path: /home/runner/work/stratos/stratos/build/reports/*
 
-      - if : success()
-        uses: actions/upload-artifact@v4
-        with:
-          name: strato-${{ env.git_short_sha }}-success-build-report.zip
-          path: /home/runner/work/stratos/stratos/build/reports/configuration-cache/*
+#      - if : success()
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: strato-${{ env.git_short_sha }}-success-build-report.zip
+#          path: /home/runner/work/stratos/stratos/build/reports/configuration-cache/*
         
       - uses: actions/upload-artifact@v4
         with:
           name: strato-${{ env.git_short_sha }}-release.apk
           path: app/build/outputs/apk/mainline/release/app-mainline-release.apk
 
-      - uses: actions/upload-artifact@v4
-        with:
-          name: strato-${{ env.git_short_sha }}-debug.apk
-          path: app/build/outputs/apk/dev/reldebug/app-dev-reldebug.apk
+#      - uses: actions/upload-artifact@v4
+#        with:
+#          name: strato-${{ env.git_short_sha }}-debug.apk
+#          path: app/build/outputs/apk/dev/reldebug/app-dev-reldebug.apk
